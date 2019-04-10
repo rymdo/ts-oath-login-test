@@ -1,0 +1,22 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended"],
+  "jsRules": {},
+  "rules": {
+    "quotemark": [true, "single"],
+    "typedef": [
+      true,
+      "call-signature",
+      "arrow-call-signature",
+      "parameter",
+      "member-variable-declaration"
+    ],
+    "trailing-comma": [false],
+    "arrow-parens": true,
+    "semicolon": [true, "always", "ignore-bound-class-methods"]
+  },
+  "rulesDirectory": [],
+  "linterOptions": {
+    "exclude": ["node_modules", "dist", "package.json"]
+  }
+}
