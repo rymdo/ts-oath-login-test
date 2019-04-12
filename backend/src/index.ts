@@ -6,7 +6,7 @@ server
   .start()
   .then(() => {
     // tslint:disable:no-console
-    console.log('Server stared');
+    console.log('Server stared!');
   })
   .catch((error) => {
     // tslint:disable:no-console

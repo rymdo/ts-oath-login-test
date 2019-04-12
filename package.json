@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "stage:backend": "cd backend && yarn lint-staged",
+    "stage:frontend": "cd frontend && yarn lint-staged",
     "build:backend": "cd backend && yarn build",
     "build:frontend": "cd frontend && yarn build",
     "test:backend": "cd backend && yarn test",
@@ -12,12 +14,13 @@
     "start:frontend": "cd frontend && yarn start",
     "build": "run-s build:*",
     "test": "run-s test:*",
-    "start": "run-p start:*"
+    "start": "run-p start:*",
+    "stage": "run-s stage:*"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "run-s build:* test:*",
-      "pre-push": "test"
+      "pre-commit": "run-s build:* test:* stage:*",
+      "pre-push": "run-s build:* test:* stage:*"
     }
   },
   "devDependencies": {
