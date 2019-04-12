@@ -1,6 +1,7 @@
+import { config } from './config';
 import { Server } from './server';
 
-const server: Server = new Server();
+const server: Server = new Server(config.port);
 server
   .start()
   .then(() => {

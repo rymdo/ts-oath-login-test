@@ -5,25 +5,30 @@ export class Server {
   public app: express.Express;
   public server: http.Server | undefined;
 
-  constructor() {
+  constructor(readonly port: number) {
     this.app = express();
+    this.configurePaths();
   }
 
-  public start = (): Promise<void> => {
+  public start = async (): Promise<void> => {
     if (this.server) {
-      return Promise.reject('server already started');
+      throw new Error('server already started');
     }
     return new Promise(
-      (resolve): void => {
-        this.server = this.app.listen(3000, () => {
-          resolve();
-        });
+      (resolve, reject): void => {
+        this.server = this.app
+          .listen(this.port, () => {
+            resolve();
+          })
+          .on('error', (err) => {
+            reject(err);
+          });
       }
     );
   };
 
-  public stop = (): Promise<void | string> => {
-    return new Promise(
+  public stop = async (): Promise<void | string> => {
+    await new Promise(
       (resolve, reject): void => {
         if (this.server) {
           this.server.close(() => {
@@ -31,9 +36,15 @@ export class Server {
             resolve();
           });
         } else {
-          reject('server not started');
+          reject(new Error('server not started'));
         }
       }
     );
   };
+
+  private configurePaths(): void {
+    this.app.get('/', (req, res) => {
+      res.status(200).send('Hello World!');
+    });
+  }
 }
